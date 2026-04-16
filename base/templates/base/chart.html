@@ -1,0 +1,87 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="section-heading">
+        <h3>Developer Survey</h3>
+        <span>Vote on your developer type</span>
+    </div>
+
+    <figure class="highcharts-figure">
+        <div id="container"></div>
+    </figure>
+
+    <form class="contact--form" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="mb-3">
+            <label class="form-label">{{field.label}}</label>
+            {{field}}
+        </div>
+        {% endfor %}
+        <input class="btn btn-primary" type="submit" value="Place your vote">
+    </form>
+</div>
+
+<script>
+    let loadData = () => {
+        fetch('/api/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                renderChart(data.backend, data.frontend, data.fullstack)
+            });
+    }
+
+    loadData()
+
+    let renderChart = (backend, frontend, fullstack) => {
+        Highcharts.chart('container', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Developer Types'
+            },
+            subtitle: {
+                text: 'Dennis Ivys Stream'
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Total'
+                }
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Backend Dev',
+                data: [backend]
+            }, {
+                name: 'Frontend Dev',
+                data: [frontend]
+            }, {
+                name: 'FullStack Dev',
+                data: [fullstack]
+            }]
+        });
+    }
+    renderChart()
+</script>
+
+<style>
+    .highcharts-figure {
+        margin: 2rem 0;
+    }
+</style>
+
+{% endblock content %}

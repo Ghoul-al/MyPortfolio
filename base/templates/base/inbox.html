@@ -1,0 +1,48 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="section-heading">
+        <h3>My Messages</h3>
+        <span>Unread Messages ({{unreadCount}})</span>
+    </div>
+
+    <div class="messages--wrapper">
+        {% for message in inbox %}
+        <div class="card {% if not message.is_read %}unread{% endif %}">
+            <div class="card-body">
+                <div class="message--header">
+                    <h5>{{message.name}}</h5>
+                    <small>{{message.created}}</small>
+                </div>
+                <p><a href="{% url 'message' message.id %}">{{message.subject}}</a></p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .messages--wrapper {
+        display: grid;
+        gap: 1rem;
+    }
+    .unread {
+        border-left: 4px solid var(--accent);
+    }
+    .message--header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+    .message--header h5 {
+        margin: 0;
+    }
+    .message--header small {
+        color: var(--text-muted);
+    }
+</style>
+
+{% endblock content %}

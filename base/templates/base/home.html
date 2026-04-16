@@ -1,0 +1,179 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+
+<section class="hero">
+    <div class="hero--content">
+        <div class="hero--content--intro">
+            <img id="profile_pic" src="{% static 'images/image.png' %}" alt="Dennis Ivanov">
+            <div class="hero--content--subheadline">
+                <h1 class="intro--name">Victor Audu</h1>
+                <h3 class="description">Backend Developer</h3>
+                <p class="slogan">I teach people how to code and build cool things.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="projects" class="section--2">
+    <div class="container">
+        <div class="section-heading">
+            <h3>My Projects</h3>
+            <span>Projects that make my journey worthwhile</span>
+        </div>
+
+        <div class="projects--wrapper">
+            {% for project in projects %}
+            <div class="project--column">
+                <a href="{% url 'project' project.id %}">
+                    <img class="project--thumbnail" src="{{project.thumbnail.url}}" alt="{{project.title}}">
+                </a>
+                <div class="project--body">
+                    <h5>{{project.title}}</h5>
+                </div>
+            </div>
+            {% empty %}
+            <div class="project--empty">
+                <h3>There are no projects in the database...</h3>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="about--wrapper">
+            <h3>More About Me</h3>
+            <p>Hi, I’m Victor
+
+I build practical web applications using Django, focused on real-world functionality and clean backend architecture.
+
+I’m currently working on projects like booking systems and a brokerage platform, while improving my skills in scalable design, user systems, and deployment.</p>
+            
+    </div>
+</section>
+
+<section class="section--1">
+    <div class="skills--container">
+        <div class="section-heading">
+            <h3>Core Expertise</h3>
+            <span>Technical skills and strategic focus</span>
+        </div>
+
+        {% for skill in detailedSkills %}
+        <div class="skill--wrapper">
+            {% if skill.logo %}
+            <img class="skill--logo" src="{{skill.logo.url}}" alt="{{skill.title}} logo">
+            {% endif %}
+            <div>
+                <h5>{{skill.title}}</h5>
+                <p>{{skill.body}}</p>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="section-heading" style="margin-top: 2rem;">
+            <h4>Other Skills</h4>
+        </div>
+        <div class="other--skills--wrapper">
+            {% for skill in skills %}
+            <div class="skill--tag">{{skill.title}}</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section--2">
+    <div class="container">
+        <div class="section-heading">
+            <h3>Endorsements</h3>
+            <span>Trusted feedback from colleagues and clients</span>
+        </div>
+
+        <div class="endorsements--actions">
+            <a class="btn btn-primary" href="{% url 'add-endorsement' %}">
+                <span>+</span> Add Endorsement
+            </a>
+        </div>
+
+        <div class="endorsements--grid">
+            {% for i in endorsements %}
+            <div class="endorsement--card">
+                <div class="endorsement--quote">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <div class="endorsement--content">
+                    <p class="endorsement--text">{{i.body}}</p>
+                    <div class="endorsement--author">
+                        <div class="endorsement--avatar">
+                            <span>{{i.name|slice:":1"|upper}}</span>
+                        </div>
+                        <div class="endorsement--info">
+                            <h5>{{i.name}}</h5>
+                            <span>Client</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="endorsement--empty">
+                <div class="endorsement--card">
+                    <div class="endorsement--quote">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="endorsement--content">
+                        <p class="endorsement--text">No endorsements yet. Be the first to share your experience!</p>
+                        <div class="endorsement--author">
+                            <div class="endorsement--avatar">
+                                <span>?</span>
+                            </div>
+                            <div class="endorsement--info">
+                                <h5>Anonymous</h5>
+                                <span>Future Client</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="section--1">
+    <div class="container">
+        <div class="section-heading">
+            <h3>Get In Touch</h3>
+            <span>Let's build something amazing together</span>
+        </div>
+        <div class="contact--wrapper">
+            <div class="contact--info">
+                <h4>Let's Connect</h4>
+                <p>I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology.</p>
+                <div class="contact--details">
+                    <div class="contact--item">
+                        <span>Email:</span> vaudu224@gmail.com
+                    </div>
+                    <div class="contact--item">
+                        <span>Location:</span> Remote / Worldwide
+                    </div>
+                </div>
+            </div>
+            <div class="contact--form--card">
+                <form class="contact--form" method="POST">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="form--group">
+                        <label class="form--label">{{field.label}}</label>
+                        {{field}}
+                    </div>
+                    {% endfor %}
+                    <button class="btn btn-primary" type="submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

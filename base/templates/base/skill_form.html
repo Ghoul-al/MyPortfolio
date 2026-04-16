@@ -1,0 +1,23 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="section-heading">
+        <h3>Add Skill</h3>
+        <span>Highlight your expertise</span>
+    </div>
+
+    <form class="contact--form" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="mb-3">
+            <label class="form-label">{{field.label}}</label>
+            {{field}}
+        </div>
+        {% endfor %}
+        <input class="btn btn-primary" type="submit" value="Submit">
+    </form>
+</div>
+
+{% endblock content %}
