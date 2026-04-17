@@ -6,6 +6,10 @@ from django.contrib import messages
 # Create your views here.
 
 
+def home(request):
+    return render(request, 'base/home.html')
+
+
 def homePage(request):
     projects = Project.objects.all()
     detailedSkills = Skill.objects.exclude(body='')
