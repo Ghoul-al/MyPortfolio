@@ -16,10 +16,5 @@ services:
           type: web
           name: MyPortfolio
           property: host
-      # Set DATABASE_URL manually in Render dashboard
-      - key: DATABASE_URL
-        sync: false
 
-runtime: python
-buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
-startCommand: gunicorn portfoliowebsite.wsgi:application --bind 0.0.0.0:$PORT
+# DATABASE_URL will be set manually in the Render dashboard
